@@ -1,0 +1,73 @@
+@mixin google-fonts() {
+	.roboto {
+		font-family: 'Roboto', sans-serif;
+	}
+
+	.ubuntu {
+		font-family: 'Ubuntu', sans-serif;
+	}
+
+	.quicksand {
+		font-family: 'Quicksand', sans-serif;
+	}
+
+	.comfortaa {
+		font-family: 'Comfortaa', cursive;
+	}
+
+	.baloo-tamma {
+		font-family: 'Baloo Tamma 2', cursive;
+	}
+
+	.clicker-script {
+		font-family: 'Clicker Script', cursive;
+	}
+
+	.bangers {
+		font-family: 'Bangers', cursive;
+	}
+
+	.font20 {
+		font-size: 20px;
+	}
+
+	.font40 {
+		font-size: 40px;
+	}
+
+	.fontItalic {
+		font-style: italic;
+	}
+
+	.fontOblique {
+		font-style: oblique;
+	}
+
+	.fontNormal {
+		font-weight: 400;
+	}
+
+	.fontLight {
+		font-weight: 300;
+	}
+
+	.fontMedium {
+		font-weight: 500;
+	}
+
+	.fontBold {
+		font-weight: 700; //bold
+	}
+
+	.fontUppercase {
+		text-transform: uppercase;
+	}
+
+	.fontLowercase {
+		text-transform: lowercase;
+	}
+
+	.fontCapitalize {
+		text-transform: capitalize;
+	}
+}
