@@ -1,0 +1,54 @@
+{
+  "user": [
+    {
+      "name": "saulo",
+      "phone": "2799041192",
+      "cpf": "13595384709",
+      "id": 2
+    },
+    {
+      "name": "Maely",
+      "phone": "2799804189",
+      "cpf": "00514798459",
+      "id": 3
+    },
+    {
+      "name": "Maely",
+      "phone": "2799999999",
+      "cpf": "99999999999",
+      "id": 4
+    },
+    {
+      "name": "saulo",
+      "phone": "9999999999",
+      "cpf": "99999999999",
+      "id": 5
+    }
+  ],
+  "order": [
+    {
+      "id": 1548,
+      "user_id": 2,
+      "status": "GUESTS_WHO_ARE_STILL_AT_THE_HOTEL",
+      "horary_check_in": "Sun Jul 09 2023 10:50:54 GMT-0300 (Horário Padrão de Brasília)",
+      "horary_check_out": "Sun Jul 09 2023 10:50:54 GMT-0300 (Horário Padrão de Brasília)",
+      "daily_price_monday_to_friday": 120,
+      "daily_price_weekends": 0,
+      "price_of_car_spaces_monday_to_friday": 0,
+      "price_of_car_spaces_weekend": 0,
+      "additional_fee_percentage_of_later_check_in": 0
+    },
+    {
+      "id": 453,
+      "user_id": 3,
+      "status": "GUESTS_WHO_ARE_STILL_AT_THE_HOTEL",
+      "horary_check_in": "Sun Jul 09 2022 10:50:54 GMT-0300 (Horário Padrão de Brasília)",
+      "horary_check_out": "Sun Jul 09 2022 10:50:54 GMT-0300 (Horário Padrão de Brasília)",
+      "daily_price_monday_to_friday": 240,
+      "daily_price_weekends": 180,
+      "price_of_car_spaces_monday_to_friday": 15,
+      "price_of_car_spaces_weekend": 20,
+      "additional_fee_percentage_of_later_check_in": 0
+    }
+  ]
+}

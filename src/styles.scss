@@ -16,7 +16,9 @@
 	@include mat.all-component-themes($altTheme);
 	@include custom-components-theme-nature($altTheme);
 }
-
+body {
+	background-color: #f1f1f1 !important;
+}
 /*
   font padrão em toda pagina
 */
@@ -25,6 +27,11 @@
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
+}
+
+.mat-snack-bar-container {
+    background-color: #673ab7;
+    color: white;
 }
 
 .snackbar-error {

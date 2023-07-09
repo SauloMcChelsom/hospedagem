@@ -1,0 +1,25 @@
+.container {
+	padding: 15px;
+}
+
+.header-container{
+	display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hide{
+	color: transparent;
+}
+
+.form-guest{
+    display: flex;
+    justify-content: space-around;
+	margin-top: 55px;
+}
+
+.submit{
+	display: flex;
+    justify-content: center;
+}

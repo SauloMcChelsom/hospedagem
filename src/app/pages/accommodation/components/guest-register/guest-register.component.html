@@ -1,0 +1,35 @@
+<div class="container">
+	<div class="header-container">
+		<button mat-fab color="primary" aria-label="Create new guest" routerLink = "">
+			<mat-icon>west</mat-icon>
+		</button>
+		<div class="titile-test">Add new guest</div>
+		<div class="hide">hide</div>
+	</div>
+
+	<div  class="form-guest">
+		<mat-form-field appearance="outline" [formGroup]="formGroup">
+			<mat-label>type your name</mat-label>
+			<input #focusElement matInput placeholder="Name" formControlName="name">
+		</mat-form-field>
+		<mat-form-field appearance="outline" [formGroup]="formGroup">
+			<mat-label>type your phone</mat-label>
+			<input matInput placeholder="phone" formControlName="phone" mask="(00) 0000-0000">
+		</mat-form-field>
+		<mat-form-field appearance="outline" [formGroup]="formGroup">
+			<mat-label>type your cpf</mat-label>
+			<input matInput placeholder="cpf" formControlName="cpf"  mask="000.000.000-00">
+		</mat-form-field>
+	</div>
+
+	<div *ngIf="loading == false" class="submit">
+		<button mat-raised-button color="primary" (click)="save()">register</button>
+	</div>
+	<div *ngIf="loading == true" class="submit">
+		<button *ngIf="loading == true" mat-raised-button color="primary" disabled>
+			<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+			<span class="visually-hidden">Loading...</span>
+			register
+		</button>
+	</div>
+</div>

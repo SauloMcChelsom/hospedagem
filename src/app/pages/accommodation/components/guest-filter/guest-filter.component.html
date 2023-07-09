@@ -1,0 +1,22 @@
+<div class="container">
+	<mat-card>
+		<div style="display: flex; align-items: stretch;">
+			<mat-form-field appearance="outline" style="width: 100%;"  [formGroup]="formGroup">
+				<mat-label>{{ label_search }}</mat-label>
+				<input matInput #focusElement [placeholder]="type_search" [mask]="mask_costomes" formControlName="search">
+			</mat-form-field>
+			<button mat-flat-button color="primary" style="height: 70px;" (click)="searchFor()">
+				<mat-icon>search</mat-icon>
+			</button>
+		</div>
+		<div class="scroll">
+			<mat-button-toggle-group name="favoriteColor" aria-label="Favorite Color">
+				<mat-button-toggle (click)="searchByName()">Name</mat-button-toggle>
+				<mat-button-toggle (click)="searchByCPF()">CPF</mat-button-toggle>
+				<mat-button-toggle (click)="searchByPhone()">Celular</mat-button-toggle>
+				<mat-button-toggle (click)="searchByGuest()">Hóspedes que ainda estão no hotel</mat-button-toggle>
+				<mat-button-toggle (click)="searchByGuestNotCheckIn()">Hóspedes que tem reservas, mas ainda não realizaram o check-in</mat-button-toggle>
+			</mat-button-toggle-group>
+		</div>
+	</mat-card>
+</div>

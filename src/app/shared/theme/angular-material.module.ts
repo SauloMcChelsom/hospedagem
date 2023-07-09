@@ -50,6 +50,7 @@ import { MatOptionModule } from '@angular/material/core';
 const materialModules = [
 	CdkTreeModule,
 	MatAutocompleteModule,
+	MatChipsModule,
 	MatButtonModule,
 	MatCardModule,
 	MatCheckboxModule,

@@ -1,0 +1,13 @@
+<div class="container" style="position: relative;">
+	<app-guest-filter 
+		(LoadOutput)="onLoadOutput($event)"
+		(InventoryOutput)="onInventoryOutput($event)"
+	></app-guest-filter>
+	<app-guest-list [UserList]="InventoryEvent" [hidden]="!load == false"></app-guest-list>
+	<div *ngIf="load == true"  class="d-flex justify-content-center align-items-center" style="height: 80vh">
+		<mat-spinner [diameter]="40"></mat-spinner>
+	</div>
+</div>
+<button  class="mat-elevation-z8" style="right: 20px; bottom: 10px; left: auto; position: fixed;" mat-fab color="primary" aria-label="Create new guest" routerLink = "new-guest">
+	<mat-icon>add</mat-icon>
+</button>

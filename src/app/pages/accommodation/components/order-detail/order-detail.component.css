@@ -1,0 +1,25 @@
+.container {
+	padding: 15px;
+}
+
+.header-container{
+	display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hide{
+	color: transparent;
+}
+
+.detail{
+ 	padding-left: 50px;
+	padding-right: 50px;
+}
+
+.submit{
+	display: flex;
+	justify-content: space-evenly;
+}
+
