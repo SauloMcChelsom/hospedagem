@@ -10,4 +10,4 @@ COPY . .
 
 RUN npm i
 
-CMD [ "sh", "-c", "npm run start:dev"]
+CMD [ "sh", "-c", "npm run start"]
