@@ -20,19 +20,19 @@ export class AccommodationApiService {
 	}
 
 	getUserById(value:number): Observable<User[]> {
-		return this.http.get<User[]>(`${url}/user/id/${value}`).pipe(map(r=>r));
+		return this.http.get<User[]>(`${url}/user?id=${value}`).pipe(map(r=>r));
 	}
 
 	getUserByCPF(value:string): Observable<User[]> {
-		return this.http.get<User[]>(`${url}/user/cpf/${value}`);
+		return this.http.get<User[]>(`${url}/user?cpf=${value}`);
 	}
 
 	getUserByName(value:string): Observable<User[]> {
-		return this.http.get<User[]>(`${url}/user/name/${value}`);
+		return this.http.get<User[]>(`${url}/user?name=${value}`);
 	}
 
 	getUserByPhone(value:string): Observable<User[]> {
-		return this.http.get<User[]>(`${url}/user/phone/${value}`);
+		return this.http.get<User[]>(`${url}/user?phone=${value}`);
 	}
 
 	createUser(value: User): Observable<User> {
@@ -42,27 +42,27 @@ export class AccommodationApiService {
 	/** */
 
 	getOrderAll(): Observable<Order[]> {
-		return this.http.get<Order[]>(`${url}/order`).pipe(map(r=>r));
+		return this.http.get<Order[]>(`${url}/order?_sort=id&_order=desc`).pipe(map(r=>r));
 	}
 
 	getUserByOderGuest(): Observable<Order[]> {
-		return this.http.get<Order[]>(`${url}/order/status/GUESTS_WHO_ARE_STILL_AT_THE_HOTEL`);
+		return this.http.get<Order[]>(`${url}/order?status=GUESTS_WHO_ARE_STILL_AT_THE_HOTEL`);
 	}
 
 	getUserByOderGuestNotCheckIn(): Observable<Order[]> {
-		return this.http.get<Order[]>(`${url}/order/status/GUESTS_WHO_HAVE_RESERVATIONS_BUT_HAVENT_CHECKED_IN`);
+		return this.http.get<Order[]>(`${url}/order?status=GUESTS_WHO_HAVE_RESERVATIONS_BUT_HAVENT_CHECKED_IN`);
 	}
 
 	getUserByOderGuestHaveAlreadyCheckIn(): Observable<Order[]> {
-		return this.http.get<Order[]>(`${url}/order/status/GUESTS_WHO_HAVE_ALREADY_CHECKED_IN`);
+		return this.http.get<Order[]>(`${url}/order?status=GUESTS_WHO_HAVE_ALREADY_CHECKED_IN`);
 	}
 
 	getOrderByUserId(value:number): Observable<Order[]> {
-		return this.http.get<Order[]>(`${url}/order/user_id/${value}`);
+		return this.http.get<Order[]>(`${url}/order?user_id=${value}`);
 	}
 
 	getOrderById(value:number): Observable<Order[]> {
-		return this.http.get<Order[]>(`${url}/order/id/${value}`);
+		return this.http.get<Order[]>(`${url}/order?id=${value}`);
 	}
 
 	createOrder(value: Order): Observable<Order> {
@@ -72,10 +72,18 @@ export class AccommodationApiService {
 	//** */
 
 	checkIn(value: Order): Observable<Order> {
-		return this.http.get<Order>(`${url}/order/check-in/order/${value.id}`,);
+		return this.http.post<Order>(`${url}/checkin`, value);
 	}
 
 	checkOut(value: number): Observable<Order> {
-		return this.http.get<Order>(`${url}/order/check-out/order/${value}`);
+		return this.http.get<Order>(`${url}/check-out/order/${value}`);
 	} 
+
+	updateUser(value: User): Observable<User> {
+		return this.http.put<User>(url + value.id, value);
+	}
+
+	deleteUser(value: User): Observable<void> {
+		return this.http.delete<void>(url + value.id);
+	}
 }
