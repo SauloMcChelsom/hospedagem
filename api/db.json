@@ -17,7 +17,49 @@
     {
       "id": 1,
       "user_id": 2,
+      "status": "GUESTS_WHO_ARE_STILL_AT_THE_HOTEL",
+      "horary_check_in": "7/9/2023",
+      "horary_check_out": "7/9/2023",
+      "daily_price_monday_to_friday": 0,
+      "daily_price_weekends": 180,
+      "price_of_car_spaces_monday_to_friday": 0,
+      "price_of_car_spaces_weekend": 20,
+      "additional_fee_percentage_of_later_check_in": 0,
+      "list_days_monday_to_friday": [],
+      "list_days_weekend": [
+        "7/9/2023"
+      ]
+    },
+    {
+      "id": 2,
+      "user_id": 1,
       "status": "GUESTS_WHO_HAVE_RESERVATIONS_BUT_HAVENT_CHECKED_IN",
+      "horary_check_in": "7/9/2023",
+      "horary_check_out": "7/16/2023",
+      "daily_price_monday_to_friday": 600,
+      "daily_price_weekends": 540,
+      "price_of_car_spaces_monday_to_friday": 75,
+      "price_of_car_spaces_weekend": 60,
+      "additional_fee_percentage_of_later_check_in": 0,
+      "list_days_monday_to_friday": [
+        "7/10/2023",
+        "7/11/2023",
+        "7/12/2023",
+        "7/13/2023",
+        "7/14/2023"
+      ],
+      "list_days_weekend": [
+        "7/9/2023",
+        "7/15/2023",
+        "7/16/2023"
+      ]
+    }
+  ],
+  "checkin": [
+    {
+      "id": 1,
+      "user_id": 2,
+      "status": "GUESTS_WHO_ARE_STILL_AT_THE_HOTEL",
       "horary_check_in": "7/9/2023",
       "horary_check_out": "7/9/2023",
       "daily_price_monday_to_friday": 0,

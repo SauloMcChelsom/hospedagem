@@ -18,6 +18,8 @@ import { Order, StatusOrder } from '../../models/order';
 })
 export class OrderDetailComponent {
 
+	public loading:boolean = false
+
 	private unsubscribe$ = new Subject();
 
 	public daysMondayToFriday:string[] = []
@@ -102,6 +104,51 @@ export class OrderDetailComponent {
 			},
 			complete:() =>{
 
+			},
+		});
+	}
+
+	public checkIn(){
+		this.loading = true
+		this.service.checkIn(this.order).pipe(takeUntil(this.unsubscribe$)).subscribe({
+			next: (items)=>{
+				this._snackBar.success(`Check-In with success`)
+				this.cd.markForCheck()
+				this.loading = false
+			},
+			error:(error)=>{
+				this.cd.markForCheck()
+				this.loading = false
+				this._snackBar.error(`There was an error! ${error.message}`)
+			},
+			complete:() =>{
+				this.cd.markForCheck()
+				this.loading = false
+			},
+		});
+	}
+
+	public checkOut(){
+		this.loading = true
+		this.service.checkOut(this.order.id).pipe(takeUntil(this.unsubscribe$)).subscribe({
+			next: (items)=>{
+				if(items.status == "GUESTS_WHO_HAVE_ALREADY_CHECKED_IN"){
+					this._snackBar.success(`Check-out with success`)
+					this.cd.markForCheck()
+					this.loading = false
+					this.redirect.navigate(['/accommodation'])
+				}else{
+					this._snackBar.error(`Não foi possivel realizar Check-out`)
+				}
+			},
+			error:(error)=>{
+				this.cd.markForCheck()
+				this.loading = false
+				this._snackBar.error(`There was an error! ${error.message}`)
+			},
+			complete:() =>{
+				this.cd.markForCheck()
+				this.loading = false
 			},
 		});
 	}

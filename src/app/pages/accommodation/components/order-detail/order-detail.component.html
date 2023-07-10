@@ -107,9 +107,30 @@
 		</div>
 	</div>
 
-	<div class="submit">
-		<button mat-raised-button color="primary">check-in</button>
-		<button mat-raised-button color="primary">check-out</button>
+	<div align="center" *ngIf="order.status == 'GUESTS_WHO_HAVE_RESERVATIONS_BUT_HAVENT_CHECKED_IN'">		
+		<div *ngIf="loading == false" class="submit">
+			<button mat-raised-button color="primary" (click)="checkIn()" style="width: 100vh; height: 60px;">check-in</button>
+		</div>
+		<div *ngIf="loading == true" class="submit">
+			<button *ngIf="loading == true" mat-raised-button color="primary" disabled style="width: 100vh; height: 60px;">
+				<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+				<span class="visually-hidden">Loading...</span>
+				check-in
+			</button>
+		</div>
+	</div>
+
+	<div align="center" *ngIf="order.status == 'GUESTS_WHO_ARE_STILL_AT_THE_HOTEL'">		
+		<div *ngIf="loading == false" class="submit">
+			<button mat-raised-button color="primary" (click)="checkOut()" style="width: 100vh; height: 60px;">check-out</button>
+		</div>
+		<div *ngIf="loading == true" class="submit">
+			<button *ngIf="loading == true" mat-raised-button color="primary" disabled style="width: 100vh; height: 60px;">
+				<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+				<span class="visually-hidden">Loading...</span>
+				check-in
+			</button>
+		</div>
 	</div>
 </div>
 <!--

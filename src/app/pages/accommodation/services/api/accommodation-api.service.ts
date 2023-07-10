@@ -57,19 +57,27 @@ export class AccommodationApiService {
 		return this.http.get<Order[]>(`${url}/order?id=${value}`);
 	}
 
-	createUser(todo: User): Observable<User> {
-		return this.http.post<User>(`${url}/user`, todo);
+	createUser(value: User): Observable<User> {
+		return this.http.post<User>(`${url}/user`, value);
 	}
 
-	createOrder(todo: Order): Observable<Order> {
-		return this.http.post<Order>(`${url}/order`, todo);
+	createOrder(value: Order): Observable<Order> {
+		return this.http.post<Order>(`${url}/order`, value);
 	}
 
-	updateUser(todo: User): Observable<User> {
-		return this.http.put<User>(url + todo.id, todo);
+	checkIn(value: Order): Observable<Order> {
+		return this.http.post<Order>(`${url}/checkin`, value);
 	}
 
-	deleteUser(todo: User): Observable<void> {
-		return this.http.delete<void>(url + todo.id);
+	checkOut(value: number): Observable<Order> {
+		return this.http.get<Order>(`${url}/check-out/order/${value}`);
+	} 
+
+	updateUser(value: User): Observable<User> {
+		return this.http.put<User>(url + value.id, value);
+	}
+
+	deleteUser(value: User): Observable<void> {
+		return this.http.delete<void>(url + value.id);
 	}
 }
