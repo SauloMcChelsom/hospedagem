@@ -6,8 +6,8 @@
 		<mat-card-title>{{ inventory.user.name }}</mat-card-title>
 		<mat-card-subtitle>{{ inventory.user.cpf | mask: '000.000.000-00' }}</mat-card-subtitle>
 		<mat-card-actions align="end">
-			<button *ngIf="inventory.id_order_recently == 0" mat-button>Reserve</button>
-			<button *ngIf="inventory.id_order_recently > 0" routerLink = "order/{{inventory.id_order_recently}}/detail" mat-button>Detail</button>
+			<button *ngIf="inventory.id_order_recently == 0" routerLink="user-id/{{inventory.user.id}}/add-new-reserve" mat-button>Reserve</button>
+			<button *ngIf="inventory.id_order_recently > 0" routerLink="order/{{inventory.id_order_recently}}/detail" mat-button>Detail</button>
 		</mat-card-actions>
 	</mat-card>
 </div>

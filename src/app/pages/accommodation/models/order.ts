@@ -13,7 +13,7 @@ export interface Order {
     //hóspedes que ainda estão no hotel;
     //hóspedes que tem reservas, mas ainda não realizaram o check-in. 
     //hóspedes que ja realizaram o check-in. 
-    status: StatusOrder.None
+    status: StatusOrder
 
     //O horário para a realização do check-in será a partir das 14h00min
     horary_check_in: string
@@ -36,4 +36,8 @@ export interface Order {
     //procedimento seja realizado posterior, deverá ser cobrada uma taxa adicional de
     //50% do valor da diária
     additional_fee_percentage_of_later_check_in: number
+
+    list_days_monday_to_friday:string[]
+    
+    list_days_weekend:string[]
 }

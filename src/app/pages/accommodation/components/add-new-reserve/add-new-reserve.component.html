@@ -1,0 +1,49 @@
+<div class="container">
+	<div class="header-container">
+		<button mat-fab color="primary" aria-label="Create new guest" routerLink = "">
+			<mat-icon>west</mat-icon>
+		</button>
+		<div class="titile-test">Add new reserve</div>
+		<div class="hide">hide</div>
+	</div>
+	<div style="display: flex; justify-content: center;">
+		<mat-form-field [formGroup]="range" appearance="fill" style="width: 0vh" >
+			<mat-label>Check-in date - Check-out date</mat-label>
+			<mat-date-range-input [formGroup]="range"  [rangePicker]="picker">
+				<input matStartDate formControlName="start" (dateChange)="open()" placeholder="Check-in">
+				<input matEndDate formControlName="end" (dateChange)="open()"placeholder="Check-out">
+			</mat-date-range-input>
+			<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+			<mat-date-range-picker #picker></mat-date-range-picker>
+		</mat-form-field>
+		<button mat-raised-button color="primary" style="width: 100vh; height: 60px;" (click)="picker.open()">Check-in date - Check-out date</button>
+	</div>
+	<div class="content-reserve">
+		<h4>Diárias de segunda à sexta-feira</h4>
+		<div class="inline"><b>Datas: </b> <div *ngFor="let valueDate of daysMondayToFriday">&nbsp;{{valueDate | date: 'dd/MM/yyyy' }},&nbsp;</div>  </div>
+		<p><b>Dias: </b>{{ daysMondayToFriday.length }}</p>
+		<!--<p><b>valor: </b>R$ {{priceMondayToFriday | mask: 'separator':','}}</p>-->
+		<h4>Diárias em finais de semana</h4>
+		<div class="inline"><b>Datas: </b> <div *ngFor="let valueDate of daysWeekend">&nbsp;{{valueDate | date: 'dd/MM/yyyy' }},&nbsp;</div>  </div>
+		<p><b>Dias: </b>{{ daysWeekend.length }}</p>
+		<!--<p><b>valor: </b>R$ {{priceWeekend | mask: 'separator':','}}</p>-->
+
+		<section class="example-section">
+			<mat-checkbox [(ngModel)]="carSpacesChecked" (click)="setCarSpacesChecked()" class="example-margin"><b>Vagas para carro</b></mat-checkbox>
+		</section>
+	</div>
+	<div align="center">
+		<!--<h1>Valor Total: R$ {{price | mask: 'separator':','}}</h1>-->
+		
+		<div *ngIf="loading == false" class="submit">
+			<button mat-raised-button color="primary" (click)="reserve()" style="width: 100vh; height: 60px;">Reservar</button>
+		</div>
+		<div *ngIf="loading == true" class="submit">
+			<button *ngIf="loading == true" mat-raised-button color="primary" disabled style="width: 100vh; height: 60px;">
+				<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+				<span class="visually-hidden">Loading...</span>
+				Reservar
+			</button>
+		</div>
+	</div>
+</div>

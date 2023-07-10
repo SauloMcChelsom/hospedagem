@@ -7,16 +7,104 @@
 		<div class="hide">hide</div>
 	</div>
 
-	<div  class="detail detail-user">
-		<h1>user</h1>
-	</div>
 
-	<div  class="detail detail-reserve">
-		<h1>reserve</h1>
-	</div>
 
-	<div  class="detail detail-pay">
-		<h1>pay</h1>
+	<div class="container">
+
+		<div class="row">
+			<div class="col">
+				<h4>Dados do hóspede</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<b>Name</b>  {{ inventory.user.name }}
+			</div>
+			<div class="col">
+				<b>CPF:</b>  {{ inventory.user.cpf | mask: '000.000.000-00'}}
+			</div>
+			<div class="col">
+				<b>Phone:</b>  {{ inventory.user.phone | mask: '(00) 0000-0000' }}
+			</div>
+		</div>
+		<br/><br/>
+		<div class="row">
+			<div class="col">
+				<h4>Horary</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<b>Check in:</b>  {{ order.horary_check_in | date: 'dd/MM/yyyy'}}
+			</div>
+			<div class="col">
+				<b>Check out:</b>  {{ order.horary_check_out | date: 'dd/MM/yyyy'}}
+			</div>
+		</div>
+		<br/><br/>
+		<div class="row">
+			<div class="col">
+				<h4>Diárias de segunda à sexta-feira</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<b>Valor da Diária:</b> R$ 120,00			   
+			</div>
+			<div class="col">
+				<b>Diária:</b>  {{ order.list_days_monday_to_friday.length }}
+			</div>
+			<div class="col">
+				<b>Total da Diária:</b>  {{ order.daily_price_monday_to_friday | mask: 'separator':','}}
+			</div>
+		</div>
+		<br/><br/>
+		<div class="row">
+			<div class="col">
+				<h4>Diárias em finais de semana</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<b>Valor da Diária:</b> R$ 180,00
+			</div>
+			<div class="col">
+				<b>Diária:</b>  {{ order.list_days_weekend.length }}
+			</div>
+			<div class="col">
+				<b>Total da Diária:</b>  {{ order.daily_price_weekends | mask: 'separator':','}}
+			</div>
+		</div>
+		<div class="row">
+			<div align="center" class="col" style="background-color: #ababab; padding: 15px;">
+				<b>Totais das Diárias</b> R$ {{ sumDaily | mask: 'separator':',' }}
+			</div>
+		</div>
+		<br/><br/>
+		<div class="row">
+			<div class="col">
+				<h4>Vagas para carro</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<b>segunda à sexta-feira:</b>  {{ order.price_of_car_spaces_monday_to_friday | mask: 'separator':','}}
+			</div>
+			<div class="col">
+				<b>finais de semana:</b>  {{ order.price_of_car_spaces_weekend | mask: 'separator':','}}
+			</div>
+		</div>
+		<div class="row">
+			<div align="center" class="col" style="background-color: #ababab; padding: 15px;">
+				<b>Totais das Diárias</b> R$ {{ sumCar | mask: 'separator':',' }}
+			</div>
+		</div>
+		<br/><br/>
+		<div class="row">
+			<div align="center" class="col" style="background-color: #ababab; padding: 15px;">
+				<b>Totais gerais</b> R$ {{ sumDailyCar | mask: 'separator':',' }}
+			</div>
+		</div>
 	</div>
 
 	<div class="submit">
@@ -24,3 +112,7 @@
 		<button mat-raised-button color="primary">check-out</button>
 	</div>
 </div>
+<!--
+
+
+ -->

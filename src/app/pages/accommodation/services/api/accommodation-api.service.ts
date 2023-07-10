@@ -13,6 +13,14 @@ const url =  environment.url;
 export class AccommodationApiService {
 	constructor(private http: HttpClient) {}
 
+	getOrderAll(): Observable<Order[]> {
+		return this.http.get<Order[]>(`${url}/order?_sort=id&_order=desc`).pipe(map(r=>r));
+	}
+
+	getUserAll(): Observable<User[]> {
+		return this.http.get<User[]>(`${url}/user?_sort=id&_order=desc`).pipe(map(r=>r));
+	}
+
 	getUserById(value:number): Observable<User[]> {
 		return this.http.get<User[]>(`${url}/user?id=${value}`).pipe(map(r=>r));
 	}
@@ -45,8 +53,16 @@ export class AccommodationApiService {
 		return this.http.get<Order[]>(`${url}/order?user_id=${value}`);
 	}
 
+	getOrderById(value:number): Observable<Order[]> {
+		return this.http.get<Order[]>(`${url}/order?id=${value}`);
+	}
+
 	createUser(todo: User): Observable<User> {
 		return this.http.post<User>(`${url}/user`, todo);
+	}
+
+	createOrder(todo: Order): Observable<Order> {
+		return this.http.post<Order>(`${url}/order`, todo);
 	}
 
 	updateUser(todo: User): Observable<User> {

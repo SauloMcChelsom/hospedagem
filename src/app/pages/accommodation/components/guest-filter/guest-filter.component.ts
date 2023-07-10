@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewChild, ChangeDetectorRef, Output, EventEmitter, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subject, concat, concatMap, empty, forkJoin, from, map, switchMap, takeUntil, toArray } from 'rxjs';
+import { Observable, Subject, concat, concatMap, empty, forkJoin, from, map, switchMap, takeUntil, tap, toArray } from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { AccommodationApiService } from '../../services/api/accommodation-api.service';
 import { User } from '../../models/user';
@@ -43,6 +43,12 @@ export class GuestFilterComponent {
 
 	constructor(private _snackBar: OpenSnackBarService, private cd: ChangeDetectorRef, private service:AccommodationApiService) {}
 
+
+	ngOnInit(){
+		this.feed()
+	}
+
+
 	ngAfterViewInit() {
 		this.searchElement.nativeElement.focus();
 	}
@@ -80,7 +86,6 @@ export class GuestFilterComponent {
 		this.search.reset()
 		this.mask_costomes = ''
 		this.search.disable();
-		console.log(this.type_search)
 		this.getUserByOderGuest()
 	}
 
@@ -90,7 +95,6 @@ export class GuestFilterComponent {
 		this.search.reset()
 		this.mask_costomes = ''
 		this.search.disable();
-		console.log(this.type_search)
 		this.getUserByOderGuestNotCheckIn()
 	}
 
@@ -109,28 +113,25 @@ export class GuestFilterComponent {
 				)),
 			).pipe(takeUntil(this.unsubscribe$)).subscribe({
 			next: (items)=>{
-				console.log(items)
 				let inventory:Inventory = {
 					user:items[0].user,
 					order:items[0].order,
 					id_order_recently:0
 				}
-				
 				let order = this.currentDate(inventory)
 				inventory.id_order_recently = order.length > 0 ? order[0].id : 0
-
 				this.INVENTORY_LIST.push(inventory)
-
 				this.INVENTORY_LIST = JSON.parse(JSON.stringify(this.INVENTORY_LIST))
-
 				this.InventoryOutput.emit(this.INVENTORY_LIST)
 				this.LoadOutput.emit(false)
 			},
 			error:(error)=>{
+				this.InventoryOutput.emit(this.INVENTORY_LIST)
 				this.LoadOutput.emit(false)
 				this._snackBar.error(`There was an error! ${error.message}`)
 			},
 			complete:() =>{
+				this.InventoryOutput.emit(this.INVENTORY_LIST)
 				this.LoadOutput.emit(false)
 			},
 		});
@@ -151,28 +152,25 @@ export class GuestFilterComponent {
 				)),
 			).pipe(takeUntil(this.unsubscribe$)).subscribe({
 			next: (items)=>{
-				console.log(items)
 				let inventory:Inventory = {
 					user:items[0].user,
 					order:items[0].order,
 					id_order_recently:0
 				}
-				
 				let order = this.currentDate(inventory)
 				inventory.id_order_recently = order.length > 0 ? order[0].id : 0
-
 				this.INVENTORY_LIST.push(inventory)
-
 				this.INVENTORY_LIST = JSON.parse(JSON.stringify(this.INVENTORY_LIST))
-
 				this.InventoryOutput.emit(this.INVENTORY_LIST)
 				this.LoadOutput.emit(false)
 			},
 			error:(error)=>{
+				this.InventoryOutput.emit(this.INVENTORY_LIST)
 				this.LoadOutput.emit(false)
 				this._snackBar.error(`There was an error! ${error.message}`)
 			},
 			complete:() =>{
+				this.InventoryOutput.emit(this.INVENTORY_LIST)
 				this.LoadOutput.emit(false)
 			},
 		});
@@ -184,6 +182,7 @@ export class GuestFilterComponent {
 		this.service
 			.getUserByName(value)
 			.pipe(
+				tap(r=>r.length == 0 ? this.INVENTORY_LIST = [] : null),
 				switchMap(items => from(items).pipe(
 					concatMap(user=>{
 						return this.service.getOrderByUserId(user.id || 0).pipe(
@@ -193,7 +192,45 @@ export class GuestFilterComponent {
 				)),
 			).pipe(takeUntil(this.unsubscribe$)).subscribe({
 			next: (items)=>{
-				console.log()
+				let inventory:Inventory = {
+					user:items[0].user,
+					order:items[0].order,
+					id_order_recently:0
+				}
+				let order = this.currentDate(inventory)
+				inventory.id_order_recently = order.length > 0 ? order[0].id : 0
+				this.INVENTORY_LIST.push(inventory)
+				this.INVENTORY_LIST = JSON.parse(JSON.stringify(this.INVENTORY_LIST))
+				this.InventoryOutput.emit(this.INVENTORY_LIST)
+				this.LoadOutput.emit(false)
+			},
+			error:(error)=>{
+				this.LoadOutput.emit(false)
+				this._snackBar.error(`There was an error! ${error.message}`)
+			},
+			complete:() =>{
+				this.InventoryOutput.emit(this.INVENTORY_LIST)
+				this.LoadOutput.emit(false)
+			},
+		});
+	}
+
+	private getUserByCPF(value:string){
+		this.INVENTORY_LIST = []
+		this.LoadOutput.emit(true)
+		this.service
+			.getUserByCPF(value)
+			.pipe(
+				tap(r=>r.length == 0 ? this.INVENTORY_LIST = [] : null),
+				switchMap(items => from(items).pipe(
+					concatMap(user=>{
+						return this.service.getOrderByUserId(user.id || 0).pipe(
+							map(order => [{user:user, order:order || []}])
+						);
+					})
+				)),
+			).pipe(takeUntil(this.unsubscribe$)).subscribe({
+			next: (items)=>{
 				let inventory:Inventory = {
 					user:items[0].user,
 					order:items[0].order,
@@ -215,51 +252,19 @@ export class GuestFilterComponent {
 				this._snackBar.error(`There was an error! ${error.message}`)
 			},
 			complete:() =>{
+				this.InventoryOutput.emit(this.INVENTORY_LIST)
 				this.LoadOutput.emit(false)
 			},
 		});
 	}
 
-	private getUserByCPF(value:string){
-		this.LoadOutput.emit(true)
-		this.service
-			.getUserByCPF(value)
-			.pipe(
-				switchMap(items => from(items).pipe(
-					concatMap(user=>{
-						return this.service.getOrderByUserId(user.id || 0).pipe(
-							map(order => [{user:user, order:order || []}])
-						);
-					})
-				)),
-			).pipe(takeUntil(this.unsubscribe$)).subscribe({
-			next: (items)=>{
-				let inventory:Inventory = {
-					user:items[0].user,
-					order:items[0].order,
-					id_order_recently:0
-				}
-				
-				let order = this.currentDate(inventory)
-				inventory.id_order_recently = order.length > 0 ? order[0].id : 0
-
-				this.InventoryOutput.emit([inventory])
-				this.LoadOutput.emit(false)
-			},
-			error:(error)=>{
-				this.LoadOutput.emit(false)
-				this._snackBar.error(`There was an error! ${error.message}`)
-			},
-			complete:() =>{
-				this.LoadOutput.emit(false)
-			},
-		});
-	}
 	private getUserByPhone(value:string){
+		this.INVENTORY_LIST = []
 		this.LoadOutput.emit(true)
 		this.service
 			.getUserByPhone(value)
 			.pipe(
+				tap(r=>r.length == 0 ? this.INVENTORY_LIST = [] : null),
 				switchMap(items => from(items).pipe(
 					concatMap(user=>{
 						return this.service.getOrderByUserId(user.id || 0).pipe(
@@ -274,10 +279,11 @@ export class GuestFilterComponent {
 					order:items[0].order,
 					id_order_recently:0
 				}
-				
 				let order = this.currentDate(inventory)
 				inventory.id_order_recently = order.length > 0 ? order[0].id : 0
-				this.InventoryOutput.emit([inventory])
+				this.INVENTORY_LIST.push(inventory)
+				this.INVENTORY_LIST = JSON.parse(JSON.stringify(this.INVENTORY_LIST))
+				this.InventoryOutput.emit(this.INVENTORY_LIST)
 				this.LoadOutput.emit(false)
 			},
 			error:(error)=>{
@@ -285,6 +291,47 @@ export class GuestFilterComponent {
 				this._snackBar.error(`There was an error! ${error.message}`)
 			},
 			complete:() =>{
+				this.InventoryOutput.emit(this.INVENTORY_LIST)
+				this.LoadOutput.emit(false)
+			},
+		});
+	}
+
+	public feed(){
+		this.LoadOutput.emit(true)
+		this.INVENTORY_LIST = []
+		this.service
+			.getUserAll()
+			.pipe(
+				tap(r=>r.length == 0 ? this.INVENTORY_LIST = [] : null),
+				switchMap(items => from(items).pipe(
+					concatMap(user=>{
+						return this.service.getOrderByUserId(user.id || 0).pipe(
+							map(order => [{user:user, order:order || []}])
+						);
+					})
+				)),
+			).pipe(takeUntil(this.unsubscribe$)).subscribe({
+			next: (items)=>{
+				let inventory:Inventory = {
+					user:items[0].user,
+					order:items[0].order,
+					id_order_recently:0
+				}
+				let order = this.currentDate(inventory)
+				inventory.id_order_recently = order.length > 0 ? order[0].id : 0
+				this.INVENTORY_LIST.push(inventory)
+				this.INVENTORY_LIST = JSON.parse(JSON.stringify(this.INVENTORY_LIST))
+				this.InventoryOutput.emit(this.INVENTORY_LIST)
+				this.LoadOutput.emit(false)
+			},
+			error:(error)=>{
+				this.InventoryOutput.emit(this.INVENTORY_LIST)
+				this.LoadOutput.emit(false)
+				this._snackBar.error(`There was an error! ${error.message}`)
+			},
+			complete:() =>{
+				this.InventoryOutput.emit(this.INVENTORY_LIST)
 				this.LoadOutput.emit(false)
 			},
 		});

@@ -39,7 +39,7 @@ export class GuestRegisterComponent {
 
 	private unsubscribe$ = new Subject();
 
-	constructor(private _snackBar: OpenSnackBarService, private service:AccommodationApiService, private cd: ChangeDetectorRef) {}
+	constructor(private redirect:Router, private _snackBar: OpenSnackBarService, private service:AccommodationApiService, private cd: ChangeDetectorRef) {}
 
 	ngAfterViewInit() {
 		this.searchElement.nativeElement.focus();
@@ -62,6 +62,7 @@ export class GuestRegisterComponent {
 					this.loading = false
 					this.reset()
 					this.cd.markForCheck();
+					this.redirect.navigate([`/accommodation`])
 				},
 				error:(error)=>{
 					this._snackBar.error(`There was an error! ${error.message}`)

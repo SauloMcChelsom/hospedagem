@@ -11,6 +11,7 @@
 		</div>
 		<div class="scroll">
 			<mat-button-toggle-group name="favoriteColor" aria-label="Favorite Color">
+				<mat-button-toggle (click)="feed()">Todos</mat-button-toggle>
 				<mat-button-toggle (click)="searchByName()">Name</mat-button-toggle>
 				<mat-button-toggle (click)="searchByCPF()">CPF</mat-button-toggle>
 				<mat-button-toggle (click)="searchByPhone()">Celular</mat-button-toggle>

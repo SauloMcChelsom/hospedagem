@@ -11,6 +11,7 @@ import { GuestRegisterComponent } from './components/guest-register/guest-regist
 import {MatChipsModule} from '@angular/material/chips';
 import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 import { NgxMaskModule } from 'ngx-mask'
+import { AddNewReserveComponent } from './components/add-new-reserve/add-new-reserve.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NgxMaskModule } from 'ngx-mask'
     GuestListComponent,
     GuestFilterComponent,
     GuestRegisterComponent,
-    OrderDetailComponent
+    OrderDetailComponent,
+    AddNewReserveComponent
   ],
   imports: [
     CommonModule,
