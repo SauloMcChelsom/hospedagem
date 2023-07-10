@@ -71,6 +71,7 @@ export class OrderDetailComponent {
 			.getOrderById(parseInt(id))
 			.pipe(
 				switchMap(items => from(items).pipe(
+					tap(()=>console.log(items)),
 					concatMap(order=>{
 						return this.service.getUserById(order.user_id).pipe(
 							map((user:User[]) => [{user:user[0], order:[order] || []}])
@@ -100,10 +101,10 @@ export class OrderDetailComponent {
 				this.cd.markForCheck()
 			},
 			error:(error)=>{
-
+				console.error('err', error)
 			},
 			complete:() =>{
-
+				console.log('complete')
 			},
 		});
 	}
@@ -112,14 +113,20 @@ export class OrderDetailComponent {
 		this.loading = true
 		this.service.checkIn(this.order).pipe(takeUntil(this.unsubscribe$)).subscribe({
 			next: (items)=>{
-				this._snackBar.success(`Check-In with success`)
-				this.cd.markForCheck()
-				this.loading = false
+				if(items.status == "CHECK_IN_SERA_PARTIR_DAS_14H00MIN"){
+					this._snackBar.error(`check-in será a partir das 14h00min`)
+					this.cd.markForCheck()
+					this.loading = false
+				}else{
+					this._snackBar.success(`Check-In with success`)
+					this.cd.markForCheck()
+					this.loading = false
+				}
 			},
 			error:(error)=>{
 				this.cd.markForCheck()
 				this.loading = false
-				this._snackBar.error(`There was an error! ${error.message}`)
+				this.redirect.navigate([`/accommodation`])
 			},
 			complete:() =>{
 				this.cd.markForCheck()
@@ -132,19 +139,21 @@ export class OrderDetailComponent {
 		this.loading = true
 		this.service.checkOut(this.order.id).pipe(takeUntil(this.unsubscribe$)).subscribe({
 			next: (items)=>{
-				if(items.status == "GUESTS_WHO_HAVE_ALREADY_CHECKED_IN"){
+				if(items.status == "CHECK_IN_SERA_PARTIR_DAS_14H00MIN"){
+					this._snackBar.error(`check-out será a partir das 14h00min`)
+					this.cd.markForCheck()
+					this.loading = false
+				}else{
 					this._snackBar.success(`Check-out with success`)
 					this.cd.markForCheck()
 					this.loading = false
-					this.redirect.navigate(['/accommodation'])
-				}else{
-					this._snackBar.error(`Não foi possivel realizar Check-out`)
 				}
 			},
 			error:(error)=>{
 				this.cd.markForCheck()
 				this.loading = false
-				this._snackBar.error(`There was an error! ${error.message}`)
+				//this._snackBar.error(`There was an error! ${error.message}`)
+				this.redirect.navigate([`/accommodation`])
 			},
 			complete:() =>{
 				this.cd.markForCheck()
